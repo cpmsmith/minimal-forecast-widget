@@ -6,5 +6,5 @@ A clean and understated forecast widget for [Übersicht][uber] that just shows y
 ##Setup
 This widget requires an API key from the [Forecast.io API][api]. Before you use this widget, open `minimal-forecast.coffee`, and change the variable `apiKey` to the key you got from Forecast.io
 
-[api]: "http://developer.forecast.io" Forecast.io Developer Site
-[uber]: "http://tracesof.net/ubersicht" Übersicht Homepage
+[api]: "http://developer.forecast.io"
+[uber]: "http://tracesof.net/ubersicht"
