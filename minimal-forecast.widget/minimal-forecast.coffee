@@ -1,12 +1,19 @@
-refreshFrequency: '1h'
+# CONFIG:
+
 apiKey:           'YOUR API KEY HERE'
+gridlineEvery:    10
+units:            'auto'
+
+# END CONFIG
+
+refreshFrequency: '1h'
 command:          ''
-exclude:          'minutely,alerts,flags,hourly,currently'
+exclude:          'alerts,flags,minutely,hourly,currently'
 heightEms:        10
 
 render: (out) ->
-  html = '<div class="zero"></div>'
-  html += '<div class="day-wrap"><div class="day"><div class="high"></div><div class="low"></div></div></div>' for i in [1..7]
+  html = ''
+  html += '<div class="day-wrap"><div class="day"><div class="high"></div><div class="low"></div></div></div>' for [1..7]
   html
 
 afterRender: (domEl) ->
@@ -21,17 +28,20 @@ afterRender: (domEl) ->
     @refresh()
 
 makeCommand: (apiKey, location) ->
-  "curl -sS 'https://api.forecast.io/forecast/#{apiKey}/#{location}?units=si&exclude=#{@exclude}'"
+  "curl -sS 'https://api.forecast.io/forecast/#{apiKey}/#{location}?units=#{@units}&exclude=#{@exclude}'"
 
 update: (o, dom) ->
   return 0 if o == ''
-  o = JSON.parse(o) if o != ''
+  o = JSON.parse(o)
   data = o.daily.data
+
+
   for day in data
     day.max = day.apparentTemperatureMax
     day.min = day.apparentTemperatureMin
     max = day.max if !(day.max < max)
     min = day.min if !(day.min > min)
+
   for day, i in dom.querySelectorAll('.day')
     day = $(day)
     day.addClass 'loaded'
@@ -39,11 +49,13 @@ update: (o, dom) ->
     day.find('.low').text(Math.round(data[i].min))
     day.css top: @map(data[i].max, max, min, 0, @heightEms)+'em'
     day.css height: @map(data[i].max - data[i].min, max-min, 0, @heightEms, 0)+'em'
-  if min < 0 and max > 0
-    $('.zero').addClass 'active'
-    $('.zero').css top: (@map(0, max, min, 0, @heightEms)+1.5)+'em'
-  else
-    $('.zero').removeClass 'active'
+
+  maxInt = Math.floor(max/@gridlineEvery)*@gridlineEvery
+  minInt = Math.ceil(min/@gridlineEvery)*@gridlineEvery
+  for t in [minInt..maxInt] by @gridlineEvery
+    line = $('<div>', {class: "gridline"}).appendTo(dom)
+    $(line).css top: (@map(t, max, min, 0, @heightEms)+1.5)+'em'
+    $(line).addClass('zero') if t == 0
 
 map: (input, omin, omax, mmin, mmax) ->
   (input-omin) * ((mmax-mmin)/(omax-omin)) + mmin
@@ -62,16 +74,20 @@ font-size: 12px
 font-weight: 400
 text-shadow: 0 0 0.2em black
 
-.zero.active
+.gridline
   position: absolute
+  left: 0
   width: 100%
-  border-top: 0.15em dashed rgba(255,255,255,0.5)
+  border-top: 0.1em solid rgba(255,255,255,0.5)
+
+.zero
+  border-top: 0.2em dashed rgba(255,255,255,0.7)
 
 .day
   position: relative
   width: 1em
   height: 10em
-  margin: 0 1.5em 0 0
+  margin: 0 0.75em
   border-radius: 0.5em
   background-color: #fff
   opacity: 0.5
