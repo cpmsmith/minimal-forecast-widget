@@ -50,6 +50,7 @@ update: (o, dom) ->
     day.css top: @map(data[i].max, max, min, 0, @heightEms)+'em'
     day.css height: @map(data[i].max - data[i].min, max-min, 0, @heightEms, 0)+'em'
 
+  $('.gridline').remove()
   maxInt = Math.floor(max/@gridlineEvery)*@gridlineEvery
   minInt = Math.ceil(min/@gridlineEvery)*@gridlineEvery
   for t in [minInt..maxInt] by @gridlineEvery
