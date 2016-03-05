@@ -81,7 +81,7 @@ text-shadow: 0 0 0.2em black
   border-top: 0.1em solid rgba(255,255,255,0.5)
 
 .zero
-  border-top: 0.2em dashed rgba(255,255,255,0.7)
+  border-top: 0.2em solid rgba(255,255,255,0.7)
 
 .day
   position: relative
