@@ -94,6 +94,7 @@ text-shadow: 0 0 0.2em black
   opacity: 0.5
   text-align: center
   transition: all 0.6s
+  box-shadow: 0 0 0.3em rgba(0,0,0,0.6)
 
 .day-wrap:last-child .day
   margin-right: 0
