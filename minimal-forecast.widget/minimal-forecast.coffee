@@ -3,6 +3,7 @@
 apiKey:           'YOUR API KEY HERE'
 gridlineEvery:    10
 units:            'auto'
+apparentTemps:    false
 
 # END CONFIG
 
@@ -10,6 +11,8 @@ refreshFrequency: '1h'
 command:          ''
 exclude:          'alerts,flags,minutely,hourly,currently'
 heightEms:        10
+iMin:             if @apparentTemps then 'apparentTemperatureMin' else 'temperatureMin'
+iMax:             if @apparentTemps then 'apparentTemperatureMax' else 'temperatureMax'
 
 render: (out) ->
   html = ''
@@ -37,18 +40,16 @@ update: (o, dom) ->
 
 
   for day in data
-    day.max = day.apparentTemperatureMax
-    day.min = day.apparentTemperatureMin
-    max = day.max if !(day.max < max)
-    min = day.min if !(day.min > min)
+    max = day[@iMax] if !(day[@iMax] < max)
+    min = day[@iMin] if !(day[@iMin] > min)
 
   for day, i in dom.querySelectorAll('.day')
     day = $(day)
     day.addClass 'loaded'
-    day.find('.high').text(Math.round(data[i].max))
-    day.find('.low').text(Math.round(data[i].min))
-    day.css top: @map(data[i].max, max, min, 0, @heightEms)+'em'
-    day.css height: @map(data[i].max - data[i].min, max-min, 0, @heightEms, 0)+'em'
+    day.find('.high').text(Math.round(data[i][@iMax]))
+    day.find('.low').text(Math.round(data[i][@iMin]))
+    day.css top: @map(data[i][@iMax], max, min, 0, @heightEms)+'em'
+    day.css height: @map(data[i][@iMax] - data[i][@iMin], max-min, 0, @heightEms, 0)+'em'
 
   $('.gridline').remove()
   maxInt = Math.floor(max/@gridlineEvery)*@gridlineEvery
@@ -80,6 +81,8 @@ text-shadow: 0 0 0.2em black
   left: 0
   width: 100%
   border-top: 0.1em solid rgba(255,255,255,0.5)
+  box-shadow: 0 0 0.2em black
+  z-index: 1
 
 .zero
   border-top: 0.2em solid rgba(255,255,255,0.7)
@@ -95,6 +98,7 @@ text-shadow: 0 0 0.2em black
   text-align: center
   transition: all 0.6s
   box-shadow: 0 0 0.3em rgba(0,0,0,0.6)
+  z-index: 2
 
 .day-wrap:last-child .day
   margin-right: 0
