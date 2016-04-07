@@ -9,10 +9,13 @@ This widget requires an API key from the [Forecast.io API][api]. Before you use 
 ##Configuration
 There are four configuration variables at the top:
 
-* **`apiKey`**: See above
-* **`gridlinesEvery`** (*10*): The distance, in degrees, between the gridlines on the graph.
-* **`units`** (*auto*): Temperature units to use. `auto`, the default, automatically selects units based on location. Other options include `si` for Celsius and `us` for Fahrenheit. See the [API documentation][units] for more information.
-* **`apparentTemps`** (*false*): Display apparent temperatures instead of actual temperatures. This can—by my estimation—include windchill, humidex, etc.
+| Name | Default Value | Description |
+| ---  | ---           | ---         |
+| `apiKey` | *none* | See above |
+| `gridlinesEvery` | 10 | The distance, in degrees, between the gridlines on the graph. |
+| `units` | `"auto"` | Temperature units to use. `auto`, the default, automatically selects units based on location. Other options include `si` for Celsius and `us` for Fahrenheit. See the [API documentation][units] for more information. |
+| `apparentTemps` | `false` | Display apparent temperatures instead of actual temperatures. This may include windchill, humidex, etc. |
+
 
 [api]: http://developer.forecast.io
 [uber]: http://tracesof.net/uebersicht
