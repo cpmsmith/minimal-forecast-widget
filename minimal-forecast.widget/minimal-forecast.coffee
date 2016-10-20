@@ -21,7 +21,7 @@ render: (out) ->
 
 afterRender: (domEl) ->
   if @apiKey.length != 32
-    domEl.innerHTML = '<a href="http://developer.forecast.io" style="color: inherit">You need an API key!</a>'
+    domEl.innerHTML = '<a href="http://darksky.net/dev" style="color: inherit">You need an API key!</a>'
     return
   geolocation.getCurrentPosition (e) =>
     coords     = e.position.coords
@@ -31,7 +31,7 @@ afterRender: (domEl) ->
     @refresh()
 
 makeCommand: (apiKey, location) ->
-  "curl -sS 'https://api.forecast.io/forecast/#{apiKey}/#{location}?units=#{@units}&exclude=#{@exclude}'"
+  "curl -sS 'https://api.darksky.net/forecast/#{apiKey}/#{location}?units=#{@units}&exclude=#{@exclude}'"
 
 update: (o, dom) ->
   return 0 if o == ''

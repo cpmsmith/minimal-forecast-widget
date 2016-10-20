@@ -4,7 +4,7 @@ A clean and understated forecast widget for [Übersicht][uber] that just shows y
 ![Screenshot of widget](screenshot.png)
 
 ##Setup
-This widget requires an API key from the [Forecast.io API][api]. Before you use this widget, open `minimal-forecast.coffee`, and change the variable `apiKey` to the key you got from Forecast.io
+This widget requires an API key from the [Dark Sky API][api]. Before you use this widget, open `minimal-forecast.coffee`, and change the variable `apiKey` to the key you got from Dark Sky.
 
 ##Configuration
 There are four configuration variables at the top:
@@ -17,6 +17,6 @@ There are four configuration variables at the top:
 | `apparentTemps` | `false` | Display apparent temperatures instead of actual temperatures. This may include windchill, humidex, etc. |
 
 
-[api]: http://developer.forecast.io
+[api]: http://darksky.net/dev
 [uber]: http://tracesof.net/uebersicht
-[units]: https://developer.forecast.io/docs/v2#options
+[units]: https://darksky.net/dev/docs/forecast
