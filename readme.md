@@ -1,12 +1,12 @@
-#minimal-forecast.widget
+# minimal-forecast.widget
 A clean and understated forecast widget for [Übersicht][uber] that just shows you the temperature trend over the next week. Click on a day to see the high and low. 
 
 ![Screenshot of widget](screenshot.png)
 
-##Setup
+## Setup
 This widget requires an API key from the [Dark Sky API][api]. Before you use this widget, open `minimal-forecast.coffee`, and change the variable `apiKey` to the key you got from Dark Sky.
 
-##Configuration
+## Configuration
 There are four configuration variables at the top:
 
 | Name | Default Value | Description |
